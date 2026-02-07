@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "budget_limits", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"category", "month", "year"})
+    @UniqueConstraint(columnNames = {"category", "\"month\"", "\"year\""})
 })
 @Data
 @NoArgsConstructor
@@ -31,11 +31,11 @@ public class BudgetLimit {
 
     @NotNull
     @Min(1) @Max(12)
-    @Column(nullable = false)
+    @Column(name = "\"month\"", nullable = false)
     private Integer month;
 
     @NotNull
     @Min(2000)
-    @Column(nullable = false)
+    @Column(name = "\"year\"", nullable = false)
     private Integer year;
 }

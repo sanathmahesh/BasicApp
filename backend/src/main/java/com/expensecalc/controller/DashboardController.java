@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @RestController
 @RequestMapping("/api/dashboard")
 @RequiredArgsConstructor
@@ -15,7 +17,11 @@ public class DashboardController {
 
     @GetMapping
     public ResponseEntity<DashboardSummary> getDashboard(
-            @RequestParam int month, @RequestParam int year) {
-        return ResponseEntity.ok(dashboardService.getDashboardSummary(month, year));
+            @RequestParam(required = false) Integer month,
+            @RequestParam(required = false) Integer year) {
+        LocalDate now = LocalDate.now();
+        int currentMonth = month != null ? month : now.getMonthValue();
+        int currentYear = year != null ? year : now.getYear();
+        return ResponseEntity.ok(dashboardService.getDashboardSummary(currentMonth, currentYear));
     }
 }
